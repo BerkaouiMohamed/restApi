@@ -3,21 +3,25 @@ const { default: mongoose } = require('mongoose')
 const authRouter = require('./routers/authRouter')
 const todosRouter = require('./routers/todosRouter')
 require('dotenv').config()
+const cors=require('cors')
+
+
+
 
 
 
 require('./utils/dbConnection')()
 
 const app=express()
-app.use(express.json())
-
+app.use(express.json()) 
+app.use(cors())
 app.use("/api/auth",authRouter)
 
 app.use("/api/todos",todosRouter)
 
 
 app.all("*",(req,res,next)=>{
-    res.json({status:"error",message:"404 not found"})
+    res.status(404).json({status:"error",message:"404 not found"})
 })
 
 app.use((error,req,res,next)=>{

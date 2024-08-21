@@ -10,6 +10,6 @@ module.exports=asyncHandler(async (req,res,next)=>{
     }
     req.headers.decode=decode
     const user=await  userModel.findById(decode._id)
-    req.headers.role=user.role
+
     next()
 })

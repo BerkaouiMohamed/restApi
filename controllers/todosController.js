@@ -22,7 +22,7 @@ module.exports={
     deleteTodo:asyncHandler(async(req,res)=>{
         const todoId=req.params.id
         const decode=req.headers.decode
-        const role=req.user.role
+
         const todos=await todoModel.deleteOne({userId:decode._id,_id:todoId})
         res.json({status:"success",data:todos})
     }),
@@ -37,6 +37,7 @@ module.exports={
         }
         else{
 
+  
          todo=await todoModel.updateOne({userId:decode._id,_id:todoId},{$set:{...req.body}},{runValidators: true})
 
         }
@@ -45,8 +46,6 @@ module.exports={
     }),
     getAllTodos:asyncHandler(async(req,res)=>{
 
-
-        
         const todos=await todoModel.find()
         res.json({status:"success",data:todos})
     }),
