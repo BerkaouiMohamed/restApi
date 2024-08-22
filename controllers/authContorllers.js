@@ -24,9 +24,18 @@ module.exports = {
     if (!comparePassword(existUser.password, req.body.password)) {
       throw new Error("somthing went wrong");
     }
-    res.json({
-      status: "success",
-      data: generateToken({ _id: existUser._id, name: existUser.name }),
-    });
+    if(existUser.role!="admin") {
+      res.json({
+        status: "success",
+        data: generateToken({ _id: existUser._id, name: existUser.name }),
+      });
+    }
+    else{
+      res.json({
+        status: "success",
+        data: generateToken({ _id: existUser._id, name: existUser.name }),
+        role:existUser.role,
+      });
+    }
   }),
 };

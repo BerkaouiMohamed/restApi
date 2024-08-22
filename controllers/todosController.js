@@ -26,6 +26,13 @@ module.exports={
         const todos=await todoModel.deleteOne({userId:decode._id,_id:todoId})
         res.json({status:"success",data:todos})
     }),
+    deleteTodoAdmin:asyncHandler(async(req,res)=>{
+        const todoId=req.params.id
+ 
+
+        const todos=await todoModel.deleteOne({_id:todoId})
+        res.json({status:"success",data:todos})
+    }),
     updateTodo:asyncHandler(async(req,res)=>{
         const todoId=req.params.id
         const decode=req.headers.decode
@@ -46,7 +53,12 @@ module.exports={
     }),
     getAllTodos:asyncHandler(async(req,res)=>{
 
-        const todos=await todoModel.find()
+
+
+        const todos=await todoModel.find({},["todo","userId"]).populate('userId')
+
+        console.log(todos);
+        
         res.json({status:"success",data:todos})
     }),
 
